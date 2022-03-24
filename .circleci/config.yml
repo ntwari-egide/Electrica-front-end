@@ -38,9 +38,3 @@ workflows:
             branches:
               only:
                 - master
-
-      - build_docker_image:
-          filters:
-            branches:
-              only:
-                - master
