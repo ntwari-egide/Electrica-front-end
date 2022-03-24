@@ -1,3 +1,8 @@
+defaults: &workdirAndImage
+  working_directory: ~/workspace
+  docker:
+    - image: circleci/openjdk:8-jdk
+
 version: 2.1
 jobs:
   build:
@@ -28,6 +33,16 @@ jobs:
       # - run:
       #     name: Deploy to Vercel
       #     command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
+
+  checkout_code:
+    <<: *workdirAndImage
+    steps:
+      - checkout:
+          path: ~/workspace/repo
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - repo/
 workflows:
   version: 2
   build-deploy:
